@@ -1,12 +1,15 @@
 package com.vikas.secret;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -15,13 +18,19 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.vikas.lib.GlideImageLoader;
 import com.vikas.secret.databinding.ActivityMainBinding;
 import com.vikas.secret.ui.chat.ChatFragment;
 
-public class MainActivity extends AppCompatActivity {
+import butterknife.BindView;
+
+public class MainActivity extends AppCompatActivity implements BaseActivity{
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
+    private final String TAG = "MAIN_ACTIVITY";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +63,25 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        setUserInfo(FirebaseAuth.getInstance().getCurrentUser());
+
+        new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // User is signed in
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                    setUserInfo(user);
+
+                } else {
+                    // User is signed out
+                    Log.d(TAG, "onAuthStateChanged:signed_out");
+                }
+                // ...
+            }
+        };
     }
 
     @Override
@@ -70,11 +98,40 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
+
+
     public void showMessageButton() {
         binding.appBarMain.fab.setVisibility(View.VISIBLE);
     }
 
     public void hideMessageButton() {
         binding.appBarMain.fab.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showProgressBar() {
+
+    }
+
+    @Override
+    public void hideProgressBar() {
+
+    }
+
+    private void setUserInfo(FirebaseUser user) {
+        if(user != null) {
+            NavigationView mNavigationView = findViewById(R.id.nav_view);
+            View headerView = mNavigationView.getHeaderView(0);
+
+            TextView userName = headerView.findViewById(R.id.name);
+            TextView userEmail = headerView.findViewById(R.id.email);
+            ImageView userProfile = headerView.findViewById(R.id.imageView);
+
+            userName.setText(user.getDisplayName());
+            userEmail.setText(user.getEmail());
+
+            GlideImageLoader imageLoader = new GlideImageLoader(getApplicationContext());
+            imageLoader.load(userProfile, user.getPhotoUrl().toString());
+        }
     }
 }
