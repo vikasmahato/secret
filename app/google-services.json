@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "72579174512",
+    "project_id": "secret-1b812",
+    "storage_bucket": "secret-1b812.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:72579174512:android:26040ff3b0e07b41dee4b5",
+        "android_client_info": {
+          "package_name": "com.vikas.secret"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "72579174512-qbk51uarpqhcp35m8urm61f5ji7of95c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vikas.secret",
+            "certificate_hash": "ce756c1f416d9282e4b4facd5038af78d94c8987"
+          }
+        },
+        {
+          "client_id": "72579174512-8t20ku7ofojcor07336p8q8ddrp3i9te.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBldZ95hlJHPQn-_Z9PF1rMvi8CS33I8OE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "72579174512-8t20ku7ofojcor07336p8q8ddrp3i9te.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
