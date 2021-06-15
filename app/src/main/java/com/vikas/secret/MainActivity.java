@@ -11,6 +11,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -24,13 +25,18 @@ import com.vikas.lib.GlideImageLoader;
 import com.vikas.secret.databinding.ActivityMainBinding;
 import com.vikas.secret.ui.chat.ChatFragment;
 
-import butterknife.BindView;
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity implements BaseActivity{
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
     private final String TAG = "MAIN_ACTIVITY";
+    private MainViewModel mainViewModel;
+
+    public MainActivity() {
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements BaseActivity{
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
         setSupportActionBar(binding.appBarMain.toolbar);
         binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
@@ -120,6 +127,9 @@ public class MainActivity extends AppCompatActivity implements BaseActivity{
 
     private void setUserInfo(FirebaseUser user) {
         if(user != null) {
+            //TODO: put this in observer
+            saveUserToFireStore(user);
+
             NavigationView mNavigationView = findViewById(R.id.nav_view);
             View headerView = mNavigationView.getHeaderView(0);
 
@@ -133,5 +143,9 @@ public class MainActivity extends AppCompatActivity implements BaseActivity{
             GlideImageLoader imageLoader = new GlideImageLoader(getApplicationContext());
             imageLoader.load(userProfile, user.getPhotoUrl().toString());
         }
+    }
+
+    private void saveUserToFireStore(FirebaseUser user) {
+        mainViewModel.saveUser(user);
     }
 }

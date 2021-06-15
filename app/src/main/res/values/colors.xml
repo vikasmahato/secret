@@ -47,4 +47,5 @@
     <color name="perms_dangerous_perm_color">#ddb66a</color>
     <color name="perms_normal_grp_color">#eeeeee</color>
     <color name="perms_normal_perm_color">#c0c0c0</color>
+    <color name="lightgreen">#e5ffcc</color>
 </resources>
