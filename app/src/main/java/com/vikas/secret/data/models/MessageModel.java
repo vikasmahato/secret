@@ -1,8 +1,22 @@
 package com.vikas.secret.data.models;
 
+import java.util.Date;
+
 public class MessageModel {
     private String uId,message;
     private Long timestamp;
+
+    public MessageModel(String uId, String message) {
+        this.uId = uId;
+        this.message = message;
+        this.timestamp = new Date().getTime();
+    }
+
+    public MessageModel(String uId, String message, Long timestamp) {
+        this.uId = uId;
+        this.message = message;
+        this.timestamp = timestamp;
+    }
 
     public String getuId() {
         return uId;

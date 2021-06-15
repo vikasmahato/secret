@@ -5,6 +5,6 @@ import com.vikas.secret.data.models.MessageModel;
 import java.util.List;
 
 public interface ChatCallbacks {
-    void onGetChatPersonCallback(String chatPersonId);
+    void onGetChatPersonCallback(String chatPersonId, String messageID);
     void onGetMessageList(List<MessageModel> messageModelList);
 }

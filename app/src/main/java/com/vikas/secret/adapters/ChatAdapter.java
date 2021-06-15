@@ -12,16 +12,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.vikas.secret.R;
 import com.vikas.secret.data.models.MessageModel;
+import com.vikas.secret.ui.chat.ChatFragment;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ChatAdapter extends RecyclerView.Adapter {
-    private ArrayList<MessageModel> messageModels;
+    private final List<MessageModel> messageModels;
     private Context context;
-    private static int SENDER_VIEW_TYPE = 1;
-    private static int RECEIVER_VIEW_TYPE = 2;
+    private static final int SENDER_VIEW_TYPE = 1;
+
+    public ChatAdapter( Context context) {
+        this.messageModels = new ArrayList<>();
+        this.context = context;
+    }
 
 
     @NonNull
@@ -43,6 +49,7 @@ public class ChatAdapter extends RecyclerView.Adapter {
         if (messageModels.get(position).getuId().equals(FirebaseAuth.getInstance().getUid())) {
             return SENDER_VIEW_TYPE;
         } else {
+            int RECEIVER_VIEW_TYPE = 2;
             return RECEIVER_VIEW_TYPE;
         }
         //return super.getItemViewType(position);
@@ -61,6 +68,12 @@ public class ChatAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemCount() {
         return (messageModels != null) ? messageModels.size() : 0;
+    }
+
+    public void update(List<MessageModel> data) {
+        messageModels.clear();
+        messageModels.addAll(data);
+        notifyDataSetChanged();
     }
 
     public class RecieverViewVolder extends RecyclerView.ViewHolder {

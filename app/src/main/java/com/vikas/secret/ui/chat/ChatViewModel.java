@@ -9,18 +9,22 @@ import com.google.firebase.auth.FirebaseUser;
 import com.vikas.secret.data.ChatRepository;
 import com.vikas.secret.data.models.MessageModel;
 
-import java.util.ArrayList;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.tuple.Pair;
+
 import java.util.List;
-import java.util.Objects;
 
 public class ChatViewModel extends ViewModel implements ChatCallbacks{
 
-    private MutableLiveData<List<MessageModel>> messages;
-    private ChatRepository chatRepository;
-    private FirebaseUser user;
+    private final MutableLiveData<List<MessageModel>> messages;
+    private final MutableLiveData<Pair<String,String>> chatPersonAndMesageID;
+
+    private final ChatRepository chatRepository;
+    private final FirebaseUser user;
 
     public ChatViewModel() {
         messages = new MutableLiveData<>();
+        chatPersonAndMesageID = new MutableLiveData<>();
         chatRepository = new ChatRepository();
         user = FirebaseAuth.getInstance().getCurrentUser();
     }
@@ -29,25 +33,32 @@ public class ChatViewModel extends ViewModel implements ChatCallbacks{
         return messages;
     }
 
-    public List<MessageModel> getMessages() {
+    public LiveData<Pair<String,String>> getChatPersonAndMessageID() {
+        return chatPersonAndMesageID;
+    }
 
-        String messageId = null;
-        List<MessageModel> messages = new ArrayList<>();
+    public void fetchChatPersonAndMessageID() {
         if(user != null)
-            chatRepository.getChatPersonUUID(user.getUid(), this);
+            chatRepository.getChatPersonAndMessageID(user.getUid(), this);
+    }
 
-
-        return messages;
+    public void getMessages(String chatID) {
+        chatRepository.getChatByUUID(chatID, this);
     }
 
     @Override
-    public void onGetChatPersonCallback(String chatPersonId) {
-        if(chatPersonId != null)
-            chatRepository.getChatByUUID(user.getUid() + chatPersonId, this);
+    public void onGetChatPersonCallback(String chatPersonId, String messageID) {
+        if(StringUtils.isNotEmpty(chatPersonId))
+            chatPersonAndMesageID.setValue(Pair.of(chatPersonId, messageID));
     }
 
     @Override
     public void onGetMessageList(List<MessageModel> messageModelList) {
+        messages.setValue(messageModelList);
+    }
 
+    public void sendMessage(String message, String messageId) {
+        MessageModel model = new MessageModel(FirebaseAuth.getInstance().getUid(), message);
+        chatRepository.sendMessage(model, messageId);
     }
 }

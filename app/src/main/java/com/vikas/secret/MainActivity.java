@@ -1,5 +1,6 @@
 package com.vikas.secret;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,14 +26,13 @@ import com.vikas.lib.GlideImageLoader;
 import com.vikas.secret.databinding.ActivityMainBinding;
 import com.vikas.secret.ui.chat.ChatFragment;
 
-import java.io.IOException;
-
 public class MainActivity extends AppCompatActivity implements BaseActivity{
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
     private final String TAG = "MAIN_ACTIVITY";
     private MainViewModel mainViewModel;
+    private SharedPreferences sharedPreferences;
 
     public MainActivity() {
     }
@@ -73,6 +73,8 @@ public class MainActivity extends AppCompatActivity implements BaseActivity{
 
         setUserInfo(FirebaseAuth.getInstance().getCurrentUser());
 
+        sharedPreferences = this.getSharedPreferences("com.vikas.secret", MODE_PRIVATE);
+
         new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -89,6 +91,26 @@ public class MainActivity extends AppCompatActivity implements BaseActivity{
                 // ...
             }
         };
+    }
+
+    public String getChatPersonID() {
+        return sharedPreferences.getString(Constants.PREFS_CHAT_PERSON_ID, "");
+    }
+
+    public String getMessageID() {
+        return sharedPreferences.getString(Constants.PREFS_MESSAGE_ID, "");
+    }
+
+    public void setChatPersonId(String chatPersonId) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(Constants.PREFS_CHAT_PERSON_ID, chatPersonId);
+        editor.apply();
+    }
+
+    public void setMessageId(String messageId) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(Constants.PREFS_MESSAGE_ID, messageId);
+        editor.apply();
     }
 
     @Override
