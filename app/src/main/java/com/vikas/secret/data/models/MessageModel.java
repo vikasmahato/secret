@@ -1,5 +1,8 @@
 package com.vikas.secret.data.models;
 
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class MessageModel {
@@ -36,6 +39,12 @@ public class MessageModel {
 
     public Long getTimestamp() {
         return timestamp;
+    }
+
+    public String getTime() {
+        Timestamp timestamp = new Timestamp(this.timestamp);
+        Date date = new Date(timestamp.getTime());
+        return DateFormat.getDateInstance().format(date);
     }
 
     public void setTimestamp(Long timestamp) {

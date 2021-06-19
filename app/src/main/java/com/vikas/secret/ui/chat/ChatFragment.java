@@ -67,11 +67,9 @@ public class ChatFragment extends Fragment {
         });
 
 
-        chatViewModel.getLiveMessages().observe(getViewLifecycleOwner(), data -> {
-          //  messageModels.clear();
-            //messageModels.addAll(data);
-            chatAdapter.update(data);
-        });
+        //  messageModels.clear();
+        //messageModels.addAll(data);
+        chatViewModel.getLiveMessages().observe(getViewLifecycleOwner(), chatAdapter::update);
 
         binding.sendMessage.setOnClickListener(v -> {
             String message = binding.etMessage.getText().toString();

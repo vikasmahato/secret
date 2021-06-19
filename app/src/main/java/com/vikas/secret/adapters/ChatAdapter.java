@@ -23,6 +23,7 @@ public class ChatAdapter extends RecyclerView.Adapter {
     private final List<MessageModel> messageModels;
     private Context context;
     private static final int SENDER_VIEW_TYPE = 1;
+    private static final int RECEIVER_VIEW_TYPE = 2;
 
     public ChatAdapter( Context context) {
         this.messageModels = new ArrayList<>();
@@ -49,7 +50,6 @@ public class ChatAdapter extends RecyclerView.Adapter {
         if (messageModels.get(position).getuId().equals(FirebaseAuth.getInstance().getUid())) {
             return SENDER_VIEW_TYPE;
         } else {
-            int RECEIVER_VIEW_TYPE = 2;
             return RECEIVER_VIEW_TYPE;
         }
         //return super.getItemViewType(position);
@@ -60,14 +60,16 @@ public class ChatAdapter extends RecyclerView.Adapter {
         MessageModel messageModel = messageModels.get(position);
         if (holder.getClass() == SenderViewVolder.class) {
             ((SenderViewVolder)holder).senderMsg.setText(messageModel.getMessage());
+            ((SenderViewVolder)holder).senderTime.setText(messageModel.getTime());
         } else {
             ((RecieverViewVolder) holder).receiverMsg.setText(messageModel.getMessage());
+            ((RecieverViewVolder) holder).receiverTime.setText(messageModel.getTime());
         }
     }
 
     @Override
     public int getItemCount() {
-        return (messageModels != null) ? messageModels.size() : 0;
+        return messageModels.size();
     }
 
     public void update(List<MessageModel> data) {

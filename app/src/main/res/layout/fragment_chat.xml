@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/chat_bg"
+    android:background="@drawable/chat_bg_dark"
     tools:context=".ui.chat.ChatFragment">
 
     <RelativeLayout
@@ -31,10 +31,10 @@
                 android:layout_weight="1"
                 android:background="@drawable/bg_et_message"
                 android:ems="10"
-                android:hint="Enter your text"
+                android:hint="@string/enter_your_text"
                 android:inputType="textPersonName"
                 android:padding="10dp"
-                android:layout_marginLeft="3dp"/>
+                android:layout_marginStart="3dp"/>
 
             <RelativeLayout
                 android:layout_width="wrap_content"

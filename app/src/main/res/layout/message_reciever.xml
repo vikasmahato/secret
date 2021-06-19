@@ -22,7 +22,6 @@
 
         android:layout_margin="8dp"
         android:layout_marginBottom="2dp"
-        android:inputType="textLongMessage|textMultiLine"
         android:maxWidth="270dp"
         android:minWidth="50dp"
         android:text="TextView"
@@ -37,12 +36,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="4dp"
-        android:layout_marginRight="4dp"
         android:layout_marginBottom="3dp"
-        android:text="12:00pm"
+        android:text="@string/unkown"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:textSize="10sp"/>
+        android:textSize="10sp"
+        tools:ignore="SmallSp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"

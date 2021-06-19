@@ -43,4 +43,19 @@
     <string name="preference_buddy">Buddy</string>
     <string name="preference_business">Business</string>
     <string name="preferences_description">Select Your Preference</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="enter_your_text">Enter your text</string>
+    <string name="unknown_location">Unknown location</string>
+    <string name="permission_rationale">Requires location access to display location on map</string>
+    <string name="permission_denied_explanation">Permission was denied, but is needed for core functionality.</string>
+    <string name="settings">Settings</string>
+    <string name="ok">OK</string>
+    <string name="unkown">12:00pm</string>
+
+    <plurals name="num_locations_reported">
+        <item quantity="zero">No location reported</item>
+        <item quantity="one">One location reported</item>
+        <item quantity="other">%d locations reported</item>
+    </plurals>
 </resources>
