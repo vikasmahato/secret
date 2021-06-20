@@ -52,6 +52,9 @@
     <string name="settings">Settings</string>
     <string name="ok">OK</string>
     <string name="unkown">12:00pm</string>
+    <string name="menu_location">Where\'s Waldo</string>
+    <string name="menu_mode">Angry mode on/off</string>
+    <string name="element_text">Element text</string>
 
     <plurals name="num_locations_reported">
         <item quantity="zero">No location reported</item>

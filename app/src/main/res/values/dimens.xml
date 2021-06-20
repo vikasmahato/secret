@@ -6,6 +6,15 @@
     <dimen name="nav_header_vertical_spacing">8dp</dimen>
     <dimen name="nav_header_height">176dp</dimen>
 
+    <dimen name="margin_tiny">4dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="margin_medium">16dp</dimen>
+    <dimen name="margin_large">32dp</dimen>
+    <dimen name="margin_huge">64dp</dimen>
+
+    <dimen name="horizontal_page_margin">@dimen/margin_medium</dimen>
+    <dimen name="vertical_page_margin">@dimen/margin_medium</dimen>
+
 
     <dimen name="fab_margin">16dp</dimen>
     <!-- The width that is used when creating thumbnails of applications. -->
@@ -607,4 +616,12 @@
     <dimen name="resolver_elevation">1dp</dimen>
     <dimen name="chooser_action_button_icon_size">18dp</dimen>
     <dimen name="fade_effect_heigth">16</dimen>
+    <dimen name="list_item_height">72dp</dimen>
+
+
+    <dimen name="title">17dp</dimen>
+    <dimen name="rating">15dip</dimen>
+    <dimen name="genre">13dip</dimen>
+    <dimen name="year">12dip</dimen>
+
 </resources>

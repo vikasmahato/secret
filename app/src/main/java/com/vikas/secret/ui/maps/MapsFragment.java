@@ -1,11 +1,9 @@
 package com.vikas.secret.ui.maps;
 
-import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,14 +17,16 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.vikas.secret.MainActivity;
 import com.vikas.secret.R;
 import com.vikas.secret.databinding.FragmentGalleryBinding;
 
-public class GalleryFragment extends Fragment {
+public class MapsFragment extends Fragment {
 
-    private GalleryViewModel galleryViewModel;
+    private MapsViewModel galleryViewModel;
     private FragmentGalleryBinding binding;
     private GoogleMap googleMapView = null;
+    private MainActivity activity;
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
@@ -42,7 +42,7 @@ public class GalleryFragment extends Fragment {
         @Override
         public void onMapReady(GoogleMap googleMap) {
             googleMapView = googleMap;
-            galleryViewModel.requestLastLocation();
+            galleryViewModel.requestLastLocation(activity.getChatPersonID());
         }
     };
 
@@ -59,10 +59,13 @@ public class GalleryFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         galleryViewModel =
-                new ViewModelProvider(this).get(GalleryViewModel.class);
+                new ViewModelProvider(this).get(MapsViewModel.class);
 
         binding = FragmentGalleryBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        activity = ((MainActivity) requireActivity());
+
+        galleryViewModel.requestLastLocation(activity.getChatPersonID());
 
         galleryViewModel.getLocation().observe(getViewLifecycleOwner(), new Observer<LatLng>() {
             @Override

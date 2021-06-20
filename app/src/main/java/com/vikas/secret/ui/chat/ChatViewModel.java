@@ -25,7 +25,7 @@ public class ChatViewModel extends ViewModel implements ChatCallbacks{
     public ChatViewModel() {
         messages = new MutableLiveData<>();
         chatPersonAndMesageID = new MutableLiveData<>();
-        chatRepository = new ChatRepository();
+        chatRepository = ChatRepository.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
     }
 

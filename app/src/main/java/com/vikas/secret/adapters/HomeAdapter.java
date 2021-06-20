@@ -46,9 +46,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ItemViewHolder
     public void onBindViewHolder(final ItemViewHolder holder, int position) {
         final HomeItem homeItem = homeItems.get(position);
 
-        //GlideImageLoader imageLoader = new GlideImageLoader(holder.itemView.getContext());
-        //imageLoader.load(holder.imageView, homeItem.getImageUrl());
-
         holder.imageView.setImageResource(homeItem.getImageUrl());
         ViewCompat.setTransitionName(holder.imageView, homeItem.getName());
 

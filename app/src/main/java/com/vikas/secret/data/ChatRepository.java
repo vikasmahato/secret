@@ -1,34 +1,36 @@
 package com.vikas.secret.data;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.vikas.secret.data.models.MessageModel;
 import com.vikas.secret.ui.chat.ChatCallbacks;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class ChatRepository {
+
+    private static ChatRepository instance = null;
+
     private final FirebaseFirestore db;
     private final String TAG = "CHAT_REPO";
     private final static String CHATPERSON = "chatperson";
     private final static String MESSAGES = "messages";
 
-    public ChatRepository() {
+    private ChatRepository() {
         this.db = FirebaseFirestore.getInstance();;
     }
+
+    public static ChatRepository getInstance() {
+        if(instance == null) {
+            instance = new ChatRepository();
+        }
+        return instance;
+    }
+
 
     public void getChatPersonAndMessageID(String userid, ChatCallbacks callbacks) {
         db.collection(CHATPERSON).document(userid).get()
@@ -67,11 +69,8 @@ public class ChatRepository {
             public void onSuccess(Object o) {
 
             }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull @NotNull Exception e) {
+        }).addOnFailureListener(e -> {
 
-            }
         });
     }
 }

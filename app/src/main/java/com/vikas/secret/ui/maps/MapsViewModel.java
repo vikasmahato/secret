@@ -5,16 +5,16 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.google.android.gms.maps.model.LatLng;
-import com.vikas.secret.data.GalleryRepository;
+import com.vikas.secret.data.MapsRepository;
 
-public class GalleryViewModel extends ViewModel implements GalleryCallbacks{
+public class MapsViewModel extends ViewModel implements MapsCallbacks {
 
     private final MutableLiveData<LatLng> location;
-    private GalleryRepository galleryRepository;
+    private final MapsRepository mapsRepository;
 
-    public GalleryViewModel() {
+    public MapsViewModel() {
         location = new MutableLiveData<>();
-        galleryRepository = new GalleryRepository();
+        mapsRepository = MapsRepository.getInstance();
     }
 
     public LiveData<LatLng> getLocation() {
@@ -26,7 +26,7 @@ public class GalleryViewModel extends ViewModel implements GalleryCallbacks{
         location.setValue(targetLocation);
     }
 
-    public void requestLastLocation() {
-        galleryRepository.getChatPersonLocation("T6BskHp17BWNlFZ68pokmqEGfv12", this);
+    public void requestLastLocation(String chatPersonID) {
+        mapsRepository.getChatPersonLocation(chatPersonID, this);
     }
 }
