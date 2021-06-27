@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.vikas.lib.GlideImageLoader;
 import com.vikas.secret.R;
 import com.vikas.secret.data.models.HomeItem;
@@ -46,10 +47,20 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ItemViewHolder
     public void onBindViewHolder(final ItemViewHolder holder, int position) {
         final HomeItem homeItem = homeItems.get(position);
 
-        holder.imageView.setImageResource(homeItem.isOpen()? R.drawable.ic_baseline_lock_open_24: R.drawable.ic_baseline_lock_24);
+        if(homeItem.isOpen())
+            holder.imageView.setImageResource(R.drawable.ic_baseline_lock_open_24);//loadImage(homeItem.getImageUrl(), holder.imageView);
+        else
+            holder.imageView.setImageResource(R.drawable.ic_baseline_lock_24);
+
         ViewCompat.setTransitionName(holder.imageView, homeItem.getName());
 
         holder.bind(holder.getAdapterPosition(), homeItem, homeItemClickListener, holder.imageView);
+    }
+
+    private void loadImage(String url, ImageView imageView) {
+        Glide.with(context)
+                .load(url)
+                .into(imageView);
     }
 
     @Override

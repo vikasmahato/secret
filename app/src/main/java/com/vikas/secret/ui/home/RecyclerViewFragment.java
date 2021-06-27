@@ -85,6 +85,7 @@ public class RecyclerViewFragment extends Fragment {
             public void onReady(@NonNull YouTubePlayer youTubePlayer) {
                 String videoId = homeItem.getVideoId();
                 youTubePlayer.loadVideo(videoId, 0);
+                youTubePlayer.play();
             }
         });
         return rootView;

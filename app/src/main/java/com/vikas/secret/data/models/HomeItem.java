@@ -5,11 +5,11 @@ import android.os.Parcelable;
 
 public class HomeItem implements Parcelable {
     private String name;
-    private int imageUrl;
+    private String imageUrl;
     private int isOpen;
     private String videoId;
 
-    public HomeItem(String name, String videoId, int imageUrl, boolean isOpen) {
+    public HomeItem(String name, String videoId, String imageUrl, boolean isOpen) {
         this.name = name;
         this.imageUrl = imageUrl;
         this.isOpen = isOpen ? 1 : 0;
@@ -18,7 +18,7 @@ public class HomeItem implements Parcelable {
 
     protected HomeItem(Parcel in) {
         name = in.readString();
-        imageUrl = in.readInt();
+        imageUrl = in.readString();
         isOpen = in.readInt();
         videoId = in.readString();
     }
@@ -43,11 +43,11 @@ public class HomeItem implements Parcelable {
         this.name = name;
     }
 
-    public int getImageUrl() {
+    public String getImageUrl() {
         return imageUrl;
     }
 
-    public void setImageUrl(int imageUrl) {
+    public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
 
@@ -64,7 +64,7 @@ public class HomeItem implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(name);
         dest.writeString(videoId);
-        dest.writeInt(imageUrl);
+        dest.writeString(imageUrl);
         dest.writeInt(isOpen);
     }
 

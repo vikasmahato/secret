@@ -53,34 +53,34 @@ public class HomeFragment extends Fragment {
 
         int hour = hourOfDay();
 
-        int[] drawables = {
-                R.drawable.cake,
-                R.drawable.balloon,
-                R.drawable.rose,
-                R.drawable.heart,
-                R.drawable.code,
-                R.drawable.pen,
-                R.drawable.rain,
-                R.drawable.girl,
-                R.drawable.cat1,
-                R.drawable.chocolate,
-                R.drawable.queen,
-                R.drawable.queen
+        String[] drawables = {
+                "https://i3.ytimg.com/vi/2aFxUFSt2XI/hqdefault.jpg", // Dehleez pe flute
+                "https://i3.ytimg.com/vi/Trjrj_fQnIM/hqdefault.jpg", // Beautiful in White
+                "https://i3.ytimg.com/vi/jsuY96Ca4R0/hqdefault.jpg", // Wo chali vo chali
+                "https://i3.ytimg.com/vi/qEd6QUbK2Mw/hqdefault.jpg", // Love out of nothing at all
+                "https://i3.ytimg.com/vi/6zoD2FNvCIo/hqdefault.jpg", // Mai bola hey
+                "https://i3.ytimg.com/vi/te9IWhXJvQo/hqdefault.jpg", // Lady in red
+                "https://i3.ytimg.com/vi/qLCLvzTGFVM/hqdefault.jpg", // Dil Mere
+                "https://i3.ytimg.com/vi/npwHNcGqueE/hqdefault.jpg", // Can't help falling in love
+                "https://i3.ytimg.com/vi/AVM4J0qvdKw/hqdefault.jpg", // Dhaaga
+                "https://i3.ytimg.com/vi/N30_bXhc9Hc/hqdefault.jpg", // Fool again
+                "https://i3.ytimg.com/vi/uB5bf7LQPVU/hqdefault.jpg", // Choo loo
+                "https://i3.ytimg.com/vi/w_Rut4qm33g/hqdefault.jpg" // Words
         };
 
         String[] videoId = {
-                "Trjrj_fQnIM",
-                "J43Z9XKj4DA",
-                "Trjrj_fQnIM",
-                "J43Z9XKj4DA",
-                "Trjrj_fQnIM",
-                "J43Z9XKj4DA",
-                "Trjrj_fQnIM",
-                "J43Z9XKj4DA",
-                "Trjrj_fQnIM",
-                "J43Z9XKj4DA",
-                "Trjrj_fQnIM",
-                "J43Z9XKj4DA",
+                "2aFxUFSt2XI", // Dehleez pe flute
+                "Trjrj_fQnIM", // Beautiful in White
+                "jsuY96Ca4R0", // Wo chali vo chali
+                "qEd6QUbK2Mw", // Love out of nothing at all
+                "6zoD2FNvCIo", // Mai bola hey
+                "te9IWhXJvQo", // Lady in red
+                "qLCLvzTGFVM", // Dil Mere
+                "npwHNcGqueE", // Can't help falling in love
+                "AVM4J0qvdKw", // Dhaaga
+                "N30_bXhc9Hc", // Fool again
+                "uB5bf7LQPVU", // Choo loo
+                "w_Rut4qm33g" // Words
         };
 
         for(int i = 0; i< drawables.length; i++) {

@@ -5,7 +5,9 @@ import java.text.DateFormat;
 import java.util.Date;
 
 public class MessageModel {
-    private String uId,message;
+
+    private String uId;
+    private String message;
     private Long timestamp;
 
     public MessageModel(String uId, String message) {
@@ -18,6 +20,12 @@ public class MessageModel {
         this.uId = uId;
         this.message = message;
         this.timestamp = timestamp;
+    }
+
+    public String getTime() {
+        Timestamp timestamp = new Timestamp(this.timestamp);
+        Date date = new Date(timestamp.getTime());
+        return DateFormat.getDateInstance().format(date);
     }
 
     public String getuId() {
@@ -38,12 +46,6 @@ public class MessageModel {
 
     public Long getTimestamp() {
         return timestamp;
-    }
-
-    public String getTime() {
-        Timestamp timestamp = new Timestamp(this.timestamp);
-        Date date = new Date(timestamp.getTime());
-        return DateFormat.getDateInstance().format(date);
     }
 
     public void setTimestamp(Long timestamp) {

@@ -95,13 +95,13 @@ public class MainActivity extends AppCompatActivity implements BaseActivity, Sha
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
         setSupportActionBar(binding.appBarMain.toolbar);
 
-        // Check if the user revoked runtime permissions.
+       /* // Check if the user revoked runtime permissions.
         if (!checkPermissions()) {
             requestPermissions();
         }
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        createLocationRequest();
+        createLocationRequest();*/
 
         binding.appBarMain.fab.setOnClickListener(view -> {
             FragmentTransaction transaction=getSupportFragmentManager().beginTransaction();
@@ -176,8 +176,8 @@ public class MainActivity extends AppCompatActivity implements BaseActivity, Sha
         super.onResume();
         //updateButtonsState(Utils.getRequestingLocationUpdates(this));
         //mLocationUpdatesResultView.setText(Utils.getLocationUpdatesResult(this));
-        Utils.getRequestingLocationUpdates(this);
-        Utils.getLocationUpdatesResult(this);
+        /*Utils.getRequestingLocationUpdates(this);
+        Utils.getLocationUpdatesResult(this);*/
 
     }
 
