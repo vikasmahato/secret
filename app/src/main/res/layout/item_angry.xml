@@ -5,6 +5,7 @@
     android:id="@+id/list_item"
     android:background="@drawable/list_row_selector"
     android:orientation="vertical"
+    android:backgroundTint="@color/elevated_black"
     android:padding="8dp" >
 
     <!-- Movie Title -->
@@ -12,6 +13,7 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/white"
         android:textSize="@dimen/title"
         android:textStyle="bold" />
 
@@ -20,7 +22,7 @@
         android:id="@+id/dateRange"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/title"
+        android:textColor="@color/safe_mode_text"
         android:layout_marginTop="1dip"
         android:textSize="@dimen/rating" />
 
@@ -29,10 +31,9 @@
         android:id="@+id/description"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/dateRange"
         android:ellipsize="end"
         android:layout_marginTop="5dp"
-        android:textColor="@color/genre"
+        android:textColor="@color/dim_foreground_dark"
         android:maxLines="1"
         android:textSize="@dimen/genre" />
 

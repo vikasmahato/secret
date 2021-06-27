@@ -47,22 +47,26 @@ public class ChatFragment extends Fragment {
         binding.chatRecylearView.setHasFixedSize(true);
         binding.chatRecylearView.setLayoutManager(new LinearLayoutManager(root.getContext()));
 
+        boolean chatMessagesCalled = false;
 
         if(StringUtils.isEmpty(activity.getMessageID())) {
             chatViewModel.fetchChatPersonAndMessageID();
             activity.showProgressBar();
         } else {
             messageID.set(activity.getMessageID());
+            chatMessagesCalled = true;
             chatViewModel.getMessages(messageID.get());
         }
 
+        boolean finalChatMessagesCalled = chatMessagesCalled;
         chatViewModel.getChatPersonAndMessageID().observe(getViewLifecycleOwner(), data -> {
             if(data != null) {
                 activity.setChatPersonId(data.getLeft());
                 activity.setMessageId(data.getRight());
                 messageID.set(data.getRight());
                 activity.hideProgressBar();
-                chatViewModel.getMessages(messageID.get());
+                if(!finalChatMessagesCalled)
+                   chatViewModel.getMessages(messageID.get());
             }
         });
 

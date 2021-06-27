@@ -26,6 +26,9 @@ import com.vikas.secret.data.models.HomeItem;
 import com.vikas.secret.databinding.FragmentHomeBinding;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -45,22 +48,47 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+
         List<HomeItem> homeItemList = new ArrayList<>();
-        homeItemList.add(new HomeItem("name1", "detail",R.drawable.cake ));
-        homeItemList.add(new HomeItem("name2", "detail",R.drawable.balloon ));
-        homeItemList.add(new HomeItem("name3", "detail",R.drawable.rose ));
-        homeItemList.add(new HomeItem("name4", "detail",R.drawable.heart ));
-        homeItemList.add(new HomeItem("name5", "detail",R.drawable.code ));
-        homeItemList.add(new HomeItem("name6", "detail",R.drawable.pen ));
-        homeItemList.add(new HomeItem("name7", "detail",R.drawable.rain ));
-        homeItemList.add(new HomeItem("name8", "detail",R.drawable.girl ));
-        homeItemList.add(new HomeItem("name9", "detail",R.drawable.cat1 ));
-        homeItemList.add(new HomeItem("name10", "detail",R.drawable.chocolate ));
-        homeItemList.add(new HomeItem("name11", "detail",R.drawable.queen ));
-        homeItemList.add(new HomeItem("name12", "detail",R.drawable.queen ));
+
+        int hour = hourOfDay();
+
+        int[] drawables = {
+                R.drawable.cake,
+                R.drawable.balloon,
+                R.drawable.rose,
+                R.drawable.heart,
+                R.drawable.code,
+                R.drawable.pen,
+                R.drawable.rain,
+                R.drawable.girl,
+                R.drawable.cat1,
+                R.drawable.chocolate,
+                R.drawable.queen,
+                R.drawable.queen
+        };
+
+        String[] videoId = {
+                "Trjrj_fQnIM",
+                "J43Z9XKj4DA",
+                "Trjrj_fQnIM",
+                "J43Z9XKj4DA",
+                "Trjrj_fQnIM",
+                "J43Z9XKj4DA",
+                "Trjrj_fQnIM",
+                "J43Z9XKj4DA",
+                "Trjrj_fQnIM",
+                "J43Z9XKj4DA",
+                "Trjrj_fQnIM",
+                "J43Z9XKj4DA",
+        };
+
+        for(int i = 0; i< drawables.length; i++) {
+            homeItemList.add(new HomeItem("name" + i, videoId[i],drawables[i] , hour/2 >= i));
+        }
 
         StaggeredGridLayoutManager gridLayoutManager =
-                new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+                new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
 
         final RecyclerView recyclerView = binding.homeRecylearView;
         recyclerView.setAdapter(new HomeAdapter(homeItemList, (adapterPosition, homeItem, imageView) -> {
@@ -72,7 +100,7 @@ public class HomeFragment extends Fragment {
                     .replace(R.id.content, recyclerViewFragment)
                     .commit();
         }, root.getContext()));
-        //recyclerView.setHasFixedSize(true);
+        recyclerView.setHasFixedSize(true);
         recyclerView.setItemAnimator(new SlideInUpAnimator());
         recyclerView.setLayoutManager(gridLayoutManager);
 
@@ -83,5 +111,11 @@ public class HomeFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    private int hourOfDay() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        return cal.get(Calendar.HOUR_OF_DAY);
     }
 }

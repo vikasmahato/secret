@@ -1,6 +1,7 @@
 package com.vikas.secret.data;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -50,14 +51,14 @@ public class ChatRepository {
                     if(value == null || value.isEmpty())
                         return;
                     List<MessageModel> messages = new ArrayList<>();
-                    for(DocumentSnapshot snapshot : value.getDocuments()) {
+                    for(DocumentChange snapshot : value.getDocumentChanges()) {
                         messages.add(new MessageModel(
-                                Objects.requireNonNull(snapshot.get("uId")).toString(),
-                                Objects.requireNonNull(snapshot.get("message")).toString(),
-                                Long.valueOf(Objects.requireNonNull(snapshot.get("timestamp")).toString())
+                                Objects.requireNonNull(snapshot.getDocument().get("uId")).toString(),
+                                Objects.requireNonNull(snapshot.getDocument().get("message")).toString(),
+                                Long.valueOf(Objects.requireNonNull(snapshot.getDocument().get("timestamp")).toString())
                         ));
-                        callbacks.onGetMessageList(messages);
                     }
+                    callbacks.onGetMessageList(messages);
                 });
     }
 

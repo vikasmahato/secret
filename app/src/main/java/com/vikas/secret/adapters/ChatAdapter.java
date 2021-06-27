@@ -73,7 +73,7 @@ public class ChatAdapter extends RecyclerView.Adapter {
     }
 
     public void update(List<MessageModel> data) {
-        messageModels.clear();
+        //messageModels.clear();
         messageModels.addAll(data);
         notifyDataSetChanged();
     }

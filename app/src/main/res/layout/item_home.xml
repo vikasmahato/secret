@@ -16,8 +16,9 @@
     <ImageView
         android:id="@+id/item_home_square_image"
         android:layout_width="match_parent"
-        android:scaleType="fitXY"
-        android:src="@mipmap/ic_launcher"
+        android:scaleType="fitCenter"
+        app:tint="@color/dim_foreground_light_inverse"
+        android:src="@drawable/ic_baseline_lock_24"
         android:layout_height="match_parent" />
 
 </androidx.cardview.widget.CardView>

@@ -1,29 +1,21 @@
 package com.vikas.secret.ui.home;
 
-import android.graphics.drawable.Drawable;
+import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
-
-import android.transition.TransitionInflater;
+import androidx.fragment.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
+import com.vikas.secret.MainActivity;
 import com.vikas.secret.R;
 import com.vikas.secret.data.models.HomeItem;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,19 +33,23 @@ public class RecyclerViewFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private MainActivity activity;
+    YouTubePlayerView youTubePlayerView;
+
     public RecyclerViewFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment RecyclerViewFragment.
-     */
-    // TODO: Rename and change types and number of parameters
+    @Override
+    public void onAttach(Activity activity) {
+
+        if (activity instanceof FragmentActivity) {
+            activity = ((MainActivity) requireActivity());
+        }
+
+        super.onAttach(activity);
+    }
+
     public static RecyclerViewFragment newInstance(HomeItem param1, String param2) {
         RecyclerViewFragment fragment = new RecyclerViewFragment();
         Bundle args = new Bundle();
@@ -63,21 +59,43 @@ public class RecyclerViewFragment extends Fragment {
         return fragment;
     }
 
-    @Override
+   /* @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         postponeEnterTransition();
         setSharedElementEnterTransition(TransitionInflater.from(getContext()).inflateTransition(android.R.transition.move));
-    }
+    }*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_recycler_view, container, false);
+
+        View rootView = inflater.inflate(R.layout.youtube_fragment, container, false);
+
+        youTubePlayerView = rootView.findViewById(R.id.youtube_player_view);
+        getLifecycle().addObserver(youTubePlayerView);
+        youTubePlayerView.enterFullScreen();
+
+        assert getArguments() != null;
+        HomeItem homeItem = getArguments().getParcelable(EXTRA_HOME_ITEM);
+
+        youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+            @Override
+            public void onReady(@NonNull YouTubePlayer youTubePlayer) {
+                String videoId = homeItem.getVideoId();
+                youTubePlayer.loadVideo(videoId, 0);
+            }
+        });
+        return rootView;
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        youTubePlayerView.release();
+    }
+    /*@Override
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         assert getArguments() != null;
@@ -108,5 +126,5 @@ public class RecyclerViewFragment extends Fragment {
                 .into(heroImageView)
         ;
 
-    }
+    }*/
 }

@@ -46,7 +46,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ItemViewHolder
     public void onBindViewHolder(final ItemViewHolder holder, int position) {
         final HomeItem homeItem = homeItems.get(position);
 
-        holder.imageView.setImageResource(homeItem.getImageUrl());
+        holder.imageView.setImageResource(homeItem.isOpen()? R.drawable.ic_baseline_lock_open_24: R.drawable.ic_baseline_lock_24);
         ViewCompat.setTransitionName(holder.imageView, homeItem.getName());
 
         holder.bind(holder.getAdapterPosition(), homeItem, homeItemClickListener, holder.imageView);

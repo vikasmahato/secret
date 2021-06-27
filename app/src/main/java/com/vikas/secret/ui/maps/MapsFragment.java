@@ -1,5 +1,7 @@
 package com.vikas.secret.ui.maps;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,10 +18,13 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.vikas.secret.MainActivity;
 import com.vikas.secret.R;
 import com.vikas.secret.databinding.FragmentGalleryBinding;
+
+import org.jetbrains.annotations.NotNull;
 
 public class MapsFragment extends Fragment {
 
@@ -43,6 +48,7 @@ public class MapsFragment extends Fragment {
         public void onMapReady(GoogleMap googleMap) {
             googleMapView = googleMap;
             galleryViewModel.requestLastLocation(activity.getChatPersonID());
+            googleMapView.setOnInfoWindowClickListener(marker -> launchDirections(marker.getPosition()));
         }
     };
 
@@ -67,13 +73,10 @@ public class MapsFragment extends Fragment {
 
         galleryViewModel.requestLastLocation(activity.getChatPersonID());
 
-        galleryViewModel.getLocation().observe(getViewLifecycleOwner(), new Observer<LatLng>() {
-            @Override
-            public void onChanged(@Nullable LatLng latLng) {
-                if(googleMapView!= null && latLng != null) {
-                    googleMapView.addMarker(new MarkerOptions().position(latLng).title("Location"));
-                    googleMapView.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-                }
+        galleryViewModel.getLocation().observe(getViewLifecycleOwner(), latLng -> {
+            if(googleMapView!= null && latLng != null) {
+                googleMapView.addMarker(new MarkerOptions().position(latLng).title("Click for directions"));
+                googleMapView.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12.0f));
             }
         });
         return root;
@@ -83,5 +86,12 @@ public class MapsFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    private void launchDirections(LatLng latLng) {
+        Uri gmmIntentUri = Uri.parse("google.navigation:q="+latLng.latitude+","+latLng.longitude + "&mode=b");
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        mapIntent.setPackage("com.google.android.apps.maps");
+        startActivity(mapIntent);
     }
 }

@@ -19,7 +19,7 @@
         android:id="@+id/recieverText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
+        android:textColor="@color/cardview_dark_background"
         android:layout_margin="8dp"
         android:layout_marginBottom="2dp"
         android:maxWidth="270dp"
@@ -34,6 +34,7 @@
     <TextView
         android:id="@+id/recieverTime"
         android:layout_width="wrap_content"
+        android:textColor="@color/cardview_dark_background"
         android:layout_height="wrap_content"
         android:layout_marginEnd="4dp"
         android:layout_marginBottom="3dp"
