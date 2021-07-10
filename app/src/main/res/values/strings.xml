@@ -55,6 +55,7 @@
     <string name="menu_location">Where\'s Waldo</string>
     <string name="menu_mode">Angry mode on/off</string>
     <string name="element_text">Element text</string>
+    <string name="default_notification_channel_id">message</string>
 
     <plurals name="num_locations_reported">
         <item quantity="zero">No location reported</item>

@@ -1,16 +1,28 @@
 package com.vikas.secret.data;
 
+import android.util.Log;
+
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.squareup.okhttp.ResponseBody;
+import com.vikas.lib.ApiClient;
+import com.vikas.lib.ApiInterface;
 import com.vikas.secret.data.models.MessageModel;
+import com.vikas.secret.notification.DataModel;
+import com.vikas.secret.notification.NotificationModel;
+import com.vikas.secret.notification.RootModel;
 import com.vikas.secret.ui.chat.ChatCallbacks;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+
+import retrofit2.Callback;
 
 public class ChatRepository {
 
@@ -63,15 +75,44 @@ public class ChatRepository {
     }
 
 
-    public void sendMessage(MessageModel message, String messageId) {
+    public void sendMessage(MessageModel message, String messageId, String chatPersonId) {
         db.collection(MESSAGES).document(messageId).collection("messages").add(message)
         .addOnSuccessListener(new OnSuccessListener() {
             @Override
             public void onSuccess(Object o) {
-
+                sendNotificationToUser(chatPersonId);
             }
         }).addOnFailureListener(e -> {
 
+        });
+    }
+
+    private void sendNotificationToUser(String chatPersonId) {
+
+        db.collection("users").document(chatPersonId).get().addOnCompleteListener(task -> {
+            if (!task.isSuccessful()) {
+                Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                return;
+            }
+
+            String token = Objects.requireNonNull(task.getResult().get("token")).toString();
+
+            RootModel rootModel = new RootModel(token, new NotificationModel("Title", "Body"), new DataModel("Name", "30"));
+
+            ApiInterface apiService =  ApiClient.getClient().create(ApiInterface.class);
+            retrofit2.Call<ResponseBody> responseBodyCall = apiService.sendNotification(rootModel);
+
+            responseBodyCall.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(retrofit2.Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                    Log.d(TAG,"Successfully notification send by using retrofit.");
+                }
+
+                @Override
+                public void onFailure(retrofit2.Call<ResponseBody> call, Throwable t) {
+
+                }
+            });
         });
     }
 }

@@ -57,8 +57,8 @@ public class ChatViewModel extends ViewModel implements ChatCallbacks{
         messages.setValue(messageModelList);
     }
 
-    public void sendMessage(String message, String messageId) {
+    public void sendMessage(String message, String messageId, String chatPersonId) {
         MessageModel model = new MessageModel(FirebaseAuth.getInstance().getUid(), message);
-        chatRepository.sendMessage(model, messageId);
+        chatRepository.sendMessage(model, messageId, chatPersonId);
     }
 }

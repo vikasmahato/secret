@@ -78,7 +78,7 @@ public class ChatFragment extends Fragment {
         binding.sendMessage.setOnClickListener(v -> {
             String message = binding.etMessage.getText().toString();
             if(StringUtils.isNotEmpty(message)) {
-                chatViewModel.sendMessage(message, messageID.get());
+                chatViewModel.sendMessage(message, messageID.get(), activity.getChatPersonID());
                 binding.etMessage.setText("");
             } else {
                 //TODO: error
