@@ -33,6 +33,7 @@
                 android:ems="10"
                 android:hint="@string/enter_your_text"
                 android:inputType="textPersonName"
+                android:textColor="@color/cardview_dark_background"
                 android:padding="10dp"
                 android:layout_marginStart="3dp"/>
 

@@ -91,13 +91,13 @@ public class ChatRepository {
 
         db.collection("users").document(chatPersonId).get().addOnCompleteListener(task -> {
             if (!task.isSuccessful()) {
-                Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                Log.w(TAG, "Fetching chat person token failed", task.getException());
                 return;
             }
 
             String token = Objects.requireNonNull(task.getResult().get("token")).toString();
 
-            RootModel rootModel = new RootModel(token, new NotificationModel("Title", "Body"), new DataModel("Name", "30"));
+            RootModel rootModel = new RootModel(token, new NotificationModel("New Message", Objects.requireNonNull(task.getResult().get("name")).toString()), new DataModel("Name", "30"));
 
             ApiInterface apiService =  ApiClient.getClient().create(ApiInterface.class);
             retrofit2.Call<ResponseBody> responseBodyCall = apiService.sendNotification(rootModel);

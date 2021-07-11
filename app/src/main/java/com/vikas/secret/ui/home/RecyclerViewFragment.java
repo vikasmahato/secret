@@ -80,14 +80,25 @@ public class RecyclerViewFragment extends Fragment {
         assert getArguments() != null;
         HomeItem homeItem = getArguments().getParcelable(EXTRA_HOME_ITEM);
 
-        youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
-            @Override
-            public void onReady(@NonNull YouTubePlayer youTubePlayer) {
-                String videoId = homeItem.getVideoId();
-                youTubePlayer.loadVideo(videoId, 0);
-                youTubePlayer.play();
-            }
-        });
+        if(homeItem.isOpen()) {
+            youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+                @Override
+                public void onReady(@NonNull YouTubePlayer youTubePlayer) {
+                    String videoId = homeItem.getVideoId();
+                    youTubePlayer.loadVideo(videoId, 0);
+                    youTubePlayer.play();
+                }
+            });
+        } else {
+            youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+                @Override
+                public void onReady(@NonNull YouTubePlayer youTubePlayer) {
+                    String videoId = homeItem.getVideoId();
+                    youTubePlayer.loadVideo("osKLrBxqkuA", 0);
+                    youTubePlayer.play();
+                }
+            });
+        }
         return rootView;
     }
 

@@ -140,7 +140,7 @@ public class LoginActivity extends AppCompatActivity implements BaseActivity {
     private void updateUI(FirebaseUser user) {
         hideProgressBar();
         if(user != null)
-            updateUiWithUser(new LoggedInUserView(user.getDisplayName()));
+            updateUiWithUser(new LoggedInUserView(user.getDisplayName(), user.getEmail()));
         else {
             // todo handle failure
         }
@@ -153,12 +153,19 @@ public class LoginActivity extends AppCompatActivity implements BaseActivity {
     }
 
     private void updateUiWithUser(LoggedInUserView model) {
-        String welcome = getString(R.string.welcome) + model.getDisplayName();
-        Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
+       // String welcome = getString(R.string.welcome) + model.getDisplayName();
+       //  Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
 
-        Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
-        LoginActivity.this.startActivity(mainIntent);
-        LoginActivity.this.finish();
+        if("vikasmahato0@gmail.com".equals(model.getEmail()) || "shwetasingh8824@gmail.com".equals(model.getEmail())) {
+            Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
+            LoginActivity.this.startActivity(mainIntent);
+            LoginActivity.this.finish();
+        } else {
+            Toast.makeText(getApplicationContext(), "Application is meant to be used by shwetasingh8824 only", Toast.LENGTH_LONG).show();
+            signOut();
+        }
+
+
     }
 
     private void showLoginFailed(@StringRes Integer errorString) {

@@ -25,6 +25,8 @@ import com.vikas.secret.adapters.HomeAdapter;
 import com.vikas.secret.data.models.HomeItem;
 import com.vikas.secret.databinding.FragmentHomeBinding;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -83,8 +85,21 @@ public class HomeFragment extends Fragment {
                 "w_Rut4qm33g" // Words
         };
 
+        Date currDate = new Date();
+        Date startDate = null;
+        try {
+            startDate = new SimpleDateFormat("dd/MM/yyyy").parse("12/07/2021");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         for(int i = 0; i< drawables.length; i++) {
-            homeItemList.add(new HomeItem("name" + i, videoId[i],drawables[i] , hour/2 >= i));
+            boolean isOpen = hour/2 >= i;
+
+            if(currDate.after(startDate))
+                isOpen = true;
+
+            homeItemList.add(new HomeItem("name" + i, videoId[i],drawables[i] , isOpen));
         }
 
         StaggeredGridLayoutManager gridLayoutManager =

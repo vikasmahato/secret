@@ -28,14 +28,11 @@ public class GmailLoginViewModel extends ViewModel {
     public void login(Activity activity, String defaultWebClientId) {
         gmailLoginRepository.login(activity, defaultWebClientId);
 
-        gmailLoginRepository.getFirebaseUser().observe((LifecycleOwner) activity, new Observer<FirebaseUser>() {
-            @Override
-            public void onChanged(@Nullable FirebaseUser firebaseUser) {
-                if (firebaseUser != null) {
-                    loginResult.setValue(new LoginResult(new LoggedInUserView(firebaseUser.getDisplayName())));
-                } else {
-                    loginResult.setValue(new LoginResult(R.string.login_failed));
-                }
+        gmailLoginRepository.getFirebaseUser().observe((LifecycleOwner) activity, firebaseUser -> {
+            if (firebaseUser != null) {
+                loginResult.setValue(new LoginResult(new LoggedInUserView(firebaseUser.getDisplayName(), firebaseUser.getEmail())));
+            } else {
+                loginResult.setValue(new LoginResult(R.string.login_failed));
             }
         });
     }

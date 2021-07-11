@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
@@ -44,6 +45,11 @@ import com.vikas.lib.Utils;
 import com.vikas.secret.databinding.ActivityMainBinding;
 import com.vikas.secret.services.LocationUpdatesBroadcastReceiver;
 import com.vikas.secret.ui.chat.ChatFragment;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements BaseActivity, SharedPreferences.OnSharedPreferenceChangeListener{
 
@@ -95,6 +101,19 @@ public class MainActivity extends AppCompatActivity implements BaseActivity, Sha
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
         setSupportActionBar(binding.appBarMain.toolbar);
 
+        Date currDate = new Date();
+        Date startDate = null;
+        try {
+            startDate = new SimpleDateFormat("dd/MM/yyyy").parse("12/07/2021");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        if(currDate.before(startDate) && !Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail().equals("vikasmahato0@gmail.com")) {
+            Toast.makeText(this, "Please wait till 12-July-2021", Toast.LENGTH_LONG).show();
+            MainActivity.this.finish();
+        }
+
        /* // Check if the user revoked runtime permissions.
         if (!checkPermissions()) {
             requestPermissions();
@@ -115,7 +134,9 @@ public class MainActivity extends AppCompatActivity implements BaseActivity, Sha
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
+                R.id.nav_home, R.id.nav_gallery
+        //        R.id.nav_slideshow
+        )
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
@@ -187,13 +208,13 @@ public class MainActivity extends AppCompatActivity implements BaseActivity, Sha
                 .unregisterOnSharedPreferenceChangeListener(this);
         super.onStop();
     }
-
+/*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
-    }
+    }*/
 
     @Override
     public boolean onSupportNavigateUp() {
